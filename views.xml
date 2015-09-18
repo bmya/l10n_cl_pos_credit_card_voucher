@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="assets_backend" name="pos_cc_voucher assets" inherit_id="point_of_sale.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/pos_cc_voucher/static/src/js/pos_cc_voucher.js"></script>
+            </xpath>
+        </template>
+
+        <template id="index" name="pos_cc_voucher index" inherit_id="point_of_sale.index">
+            <xpath expr="//link[@id='pos-stylesheet']" position="after">
+                <link rel="stylesheet" href="/pos_cc_voucher/static/src/css/pos_cc_voucher.css"/>
+            </xpath>
+        </template>
+
+        <record model="ir.ui.view" id="view_account_journal_pos_user_form_add_cc_voucher">
+            <field name="name">POS Journal CCVoucher</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='self_checkout_payment_method']" position="after">
+                    <field name="add_credit_card_voucher_number"/>
+                </xpath>
+            </field>
+        </record>
+
+     </data>
+</openerp>
