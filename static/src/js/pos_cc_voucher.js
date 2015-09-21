@@ -1,4 +1,4 @@
-openerp.pos_cc_voucher = function(instance){
+openerp.l10n_cl_pos_credit_card_voucher = function(instance){
     var module = instance.point_of_sale;
     var QWeb = instance.web.qweb;
 	var _t = instance.web._t;

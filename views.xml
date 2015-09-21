@@ -2,15 +2,15 @@
 <openerp>
     <data>
 
-        <template id="assets_backend" name="pos_cc_voucher assets" inherit_id="point_of_sale.assets_backend">
+        <template id="assets_frontend" name="l10n_cl_pos_credit_card_voucher assets" inherit_id="point_of_sale.index">
             <xpath expr="." position="inside">
-                <script type="text/javascript" src="/pos_cc_voucher/static/src/js/pos_cc_voucher.js"></script>
+                <script type="text/javascript" src="/l10n_cl_pos_credit_card_voucher/static/src/js/pos_cc_voucher.js"></script>
             </xpath>
         </template>
 
-        <template id="index" name="pos_cc_voucher index" inherit_id="point_of_sale.index">
+        <template id="index" name="l10n_cl_pos_credit_card_voucher index" inherit_id="point_of_sale.index">
             <xpath expr="//link[@id='pos-stylesheet']" position="after">
-                <link rel="stylesheet" href="/pos_cc_voucher/static/src/css/pos_cc_voucher.css"/>
+                <link rel="stylesheet" href="/l10n_cl_pos_credit_card_voucher/static/src/css/pos_cc_voucher.css"/>
             </xpath>
         </template>
 
