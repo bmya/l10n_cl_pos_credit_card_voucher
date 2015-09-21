@@ -4,7 +4,7 @@ from openerp import models, fields
 class invoice_seller_field(models.Model):
     _inherit = "account.invoice"
 
-    cc_voucher = fields.Char('Credit Card Voucher'),
+    cc_voucher = fields.Char('Credit Card Voucher')
 
 
 class account_journal(models.Model):
