@@ -5,7 +5,7 @@ from openerp import models, fields
 class account_invoice(models.Model):
     _inherit = "account.invoice"
 
-    ccvoucher_line = fields.One2many('account.invoice.ccvoucher', 'invoice_id', string='Credit Card Voucher Lines',
+    ccvoucher_line_ids = fields.One2many('account.invoice.ccvoucher', 'invoice_id', string='Credit Card Voucher Lines',
                                      states={'draft': [('readonly', False)]}, readonly=True, copy=True)
 
 
