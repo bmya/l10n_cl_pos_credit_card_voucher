@@ -15,6 +15,11 @@ openerp.l10n_cl_pos_credit_card_voucher = function(instance){
         get_ccvoucher: function(){
             return this.ccvoucher;
         },
+        export_as_JSON: function(){
+            var res = PaymentlineSuper.prototype.export_as_JSON.apply(this, arguments);
+            res.ccvoucher = this.get_ccvoucher();
+            return res;
+        },
     });
 
     module.PaymentScreenWidget.include({
@@ -23,14 +28,13 @@ openerp.l10n_cl_pos_credit_card_voucher = function(instance){
 
             this.line_changeCCV_handler = function(){
                 var node = this;
-                console.log(node);
                 while(node && !node.classList.contains('paymentline')){
                     node = node.parentNode;
                 }
                 if(node){
                     var ccvoucher;
                     try{
-                        ccvoucher = instance.web.parse_value(this.value, {type: "integer"});
+                        ccvoucher = instance.web.parse_value(this.value, {type: ""});
                     }
                     catch(e){
                         ccvoucher = 0;
@@ -82,7 +86,7 @@ openerp.l10n_cl_pos_credit_card_voucher = function(instance){
                 el_node.querySelector('.paymentline-input').addEventListener('keyup', this.line_change_handler);
                 if(line.cashregister.journal.add_credit_card_voucher_number){
                     el_node.querySelector('.paymentlineCCV-input')
-                        .addEventListener('keyup', this.line_changeCCV_handler);
+                        .addEventListener('blur', this.line_changeCCV_handler);
                 }
 
             line.node = el_node;

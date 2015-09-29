@@ -30,8 +30,12 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='move_id']" position="after">
-                    <field name="cc_voucher" />
+                <xpath expr="//field[@name='tax_line']" position="before">
+                    <field name="ccvoucher_line">
+                        <tree editable="bottom" string="Credit Card Vouchers">
+                            <field name="voucher_number"/>
+                        </tree>
+                    </field>
                 </xpath>
             </field>
         </record>
