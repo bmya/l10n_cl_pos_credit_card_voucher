@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields
+from openerp.osv import osv
+from openerp.osv import fields as old_fields
 
 
 class account_invoice(models.Model):
     _inherit = "account.invoice"
 
-    ccvoucher_line_ids = fields.One2many('account.invoice.ccvoucher', 'invoice_id', string='Credit Card Voucher Lines',
-                                     states={'draft': [('readonly', False)]}, readonly=True, copy=True)
+    ccvoucher_line_ids = fields.One2many('account.invoice.ccvoucher', 'invoice_id',
+                                         string='Credit Card Voucher Lines', copy=True)
 
 
 class account_journal(models.Model):
@@ -30,17 +32,18 @@ class pos_order_ccvoucher(models.Model):
     voucher_number = fields.Char('Credit Card Voucher Number')
 
 
-class pos_order(models.Model):
+class pos_order(osv.osv):
     _inherit = "pos.order"
 
-    ccvoucher_order_ids = fields.One2many('pos.order.ccvoucher', 'order_id', copy=True)
+    _columns = {
+        'ccvoucher_order_ids': old_fields.one2many('pos.order.ccvoucher', 'order_id', copy=True)
+    }
 
     def _process_order(self, cr, uid, order, context=None):
         order_id = super(pos_order, self)._process_order(cr, uid, order, context)
         for paymentline in order['statement_ids']:
-            self.pool.get('pos.order.ccvoucher').create(cr, uid, {'order_id': order_id,
-                                                                  'voucher_number': paymentline[2]['ccvoucher']
-                                                                  })
+            self.pool.get('pos.order.ccvoucher').create(cr, uid, {
+                'order_id': order_id, 'voucher_number': paymentline[2]['ccvoucher'], }, context=context)
         return order_id
 
     def action_invoice(self, cr, uid, ids, context=None):
@@ -50,7 +53,6 @@ class pos_order(models.Model):
         for order in self.pool.get('pos.order').browse(cr, uid, ids, context=context):
             invoice_id = self.pool.get('account.invoice').search(cr, uid, [('origin', '=', order.name)], context=context)
             for line in order.ccvoucher_order_ids:
-                inv_voucher_ref.create(cr, uid, {'invoice_id': invoice_id[0],
-                                                 'voucher_number': line.voucher_number,
-                                                 }, context=context)
+                inv_voucher_ref.create(cr, uid, {
+                    'invoice_id': invoice_id[0], 'voucher_number': line.voucher_number, }, context=context)
         return res

@@ -45,11 +45,11 @@ openerp.l10n_cl_pos_credit_card_voucher = function(instance){
 
         },
         focus_selected_line: function(){
-            var event_target_class = $(event.target).attr('class');
+            var event_target = event.target || event.srcElement;
             var line = this.pos.get('selectedOrder').selected_paymentline;
             if(line){
                 var input;
-                if(event_target_class=='paymentlineCCV-input'){
+                if($(event_target).hasClass('paymentlineCCV-input')){
                     input = line.node.querySelector('.paymentlineCCV-input');
                 }else{
                     input = line.node.querySelector('.paymentline-input');
