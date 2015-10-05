@@ -8,7 +8,10 @@
     'version': '0.1',
     'description': """
 """,
-    'data': ['views.xml'],
+    'data': [
+        'views.xml',
+        'security/ir.model.access.csv',
+    ],
     'qweb': ['static/src/xml/pos_cc_voucher.xml'],
     'demo': [],
     'installable': True,
